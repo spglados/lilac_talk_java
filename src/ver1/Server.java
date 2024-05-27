@@ -1,5 +1,3 @@
-package ver1;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,13 +5,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
 import lombok.Data;
 
 @Data
@@ -204,7 +201,65 @@ public class Server {
 			
 			for (int i = 0; i < madeRooms.size(); i++) {
 				MyRoom myRoom = madeRooms.elementAt(i);
+				
+				if(myRoom.roomName.equals(from)) {
+					myRoom.roomBroadCast("Chatting/" + id + "/" + message);
+				}
 			}
+		}
+		
+		@Override
+		public void secretMessage() {
+			serverViewAppendWriter("[비밀 메세지]" + id + "->" + from + "-" + message + "\n");
+		
+			for (int i = 0; i < connectedUsers.size(); i++) {
+				connectedUsers user = connectedUsers.elementAt(i);
+				
+				if (user.id.equals(from)) {
+					user.writer("SecetMessage/" + id + "/" + message);
+				}
+			}
+		}
+		
+		@Override
+		public void makeRoom() {
+			for (int i = 0; i <madeRooms.size(); i++) {
+				MyRoom room = madeRooms.elementAt(i);
+				
+				if(room.roomName.equals(from)) {
+					writer("FailMakeRoom/" + from);
+					serverViewAppendWriter("[방 생성 실패]" + id + "-" + from + "\n");
+					roomCheck = false;
+				} else {
+					roomCheck = true;
+				}
+			}
+			
+			if (roomCheck) {
+				myRoomName = from;
+				MyRoom myRoom = new MyRoom(from, this);
+				madeRooms.add(myRoom);
+				serverViewAppendWriter("[방 생성]" + id + "-" + from + "\n");
+				
+				newRoom();
+				writer("MakeRoom/" + from);
+			}
+			
+		}
+		
+		@Override
+		public void newRoom() {
+			broadCast("NewRoom/" + from);
+		}
+		
+		@Override
+		public void outRoom() {
+			for(int i = 0; i < madeRooms.size(); i++) {
+				MyRoom myRoom = madeRooms.elementAt(i);
+				
+				if ()
+			}
+			
 		}
 		
 
