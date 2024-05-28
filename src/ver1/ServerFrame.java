@@ -18,13 +18,18 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class ServerFrame extends JFrame {
 
 	private Server mContext;
 
-	// 스크롤패인
+	// 스크롤패인 	
 	private ScrollPane scrollPane; 
 
 	// 백그라운드 패널
@@ -40,7 +45,6 @@ public class ServerFrame extends JFrame {
 	private JTextField inputPort;
 	private JButton connectButton;
 
-	// Server mContext 추가 후 수정
 	public ServerFrame(Server mContext) {
 		this.mContext = mContext;
 		initObject();
@@ -69,7 +73,8 @@ public class ServerFrame extends JFrame {
 	}
 
 	private void initSetting() {
-		setTitle("** Lilac Talk ** - 서버관리자");
+		// ✿✿✿✿✿✿
+		setTitle("✿✿ Lilac Talk ✿✿ - 서버관리자");
 		setSize(500, 700);
 		setLocationRelativeTo(null); // 화면 가운데 비치
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,21 +87,20 @@ public class ServerFrame extends JFrame {
 
 		// 포트패널 컴포넌트
 		// 조절 필요
-		portPanel.setBounds(150, 30, 300, 50);
+		portPanel.setBounds(100, 30, 300, 50);
 		portPanel.setBackground(new Color(0, 0, 0, 0));
 		portPanel.add(portLabel);
 		portPanel.add(inputPort);
 		portPanel.add(connectButton);
 		backgroundPanel.add(portPanel);
 
-		// 메인패널 컴포넌트
-		mainPanel.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Server"));
-		mainPanel.setBounds(100, 100, 500, 500);
+		mainPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 5), "Server List"));
+		mainPanel.setBounds(50, 100, 400, 500);
 		mainPanel.setBackground(Color.WHITE);
 		
 		mainBoard.setEnabled(false); // 2번클릭 방지
 		mainPanel.add(scrollPane);
-		scrollPane.setBounds(105, 100, 480, 480);
+		scrollPane.setBounds(55, 100, 380, 465);
 		scrollPane.add(mainBoard);
 		backgroundPanel.add(mainPanel);
 		
@@ -118,8 +122,7 @@ public class ServerFrame extends JFrame {
 		private Image backgroundImage;
 
 		public BackgroundPanel() {
-			// 500 x 700
-			backgroundImage = new ImageIcon("images/background500.png").getImage();
+			backgroundImage = new ImageIcon("images/background_image.png").getImage();
 			backgroundPanel = new JPanel();
 			add(backgroundPanel);
 		}
@@ -132,4 +135,4 @@ public class ServerFrame extends JFrame {
 
 	} // end of BackgroundPanel ( 내부 클래스 )
 
-}
+} // end of class
