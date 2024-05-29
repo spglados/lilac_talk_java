@@ -116,7 +116,7 @@ public class ServerFrame extends JFrame {
 		});
 	}
 
-	// 내부 클래스
+	// 내부 클래스 BackgroundPanel
 	private class BackgroundPanel extends JPanel {
 		private JPanel backgroundPanel;
 		private Image backgroundImage;

@@ -12,12 +12,10 @@ import java.net.Socket;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -52,7 +50,7 @@ public class Server {
 	private String from;
 	private String message;
 
-	private ImageIcon icon = new ImageIcon("images/lilac1.jpg");
+	private ImageIcon icon = new ImageIcon("images/error1_clear.png");
 
 	public Server() {
 		serverFrame = new ServerFrame(this);
@@ -64,11 +62,10 @@ public class Server {
 	public void startServer() {
 		// 서버 소켓 장치
 		try {
-			serverSocket = new ServerSocket(5000);
+			serverSocket = new ServerSocket(10000);
 			serverViewAppendWriter("[알림] 서버 시작\n");
 			serverFrame.getConnectButton().setEnabled(false);
 			connectClient(); // 클라이언트 연결
-
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "이미 사용중인 포트입니다.", "알림", JOptionPane.ERROR_MESSAGE, icon);
 			serverFrame.getConnectButton().setEnabled(true);
@@ -77,16 +74,15 @@ public class Server {
 
 	private void connectClient() {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
+				
 				while (true) {
 					try {
-
 						// 소켓 장치
 						socket = serverSocket.accept();
 						serverViewAppendWriter("[알림] 사용자 접속 대기 \n");
-
+						
 						// 연결을 대기 하다가 유저가 들어오면 유저 생성, 소켓으로 유저 구분 가능
 						ConnectedUser user = new ConnectedUser(socket);
 						user.start();
@@ -123,6 +119,7 @@ public class Server {
 
 	// 소켓 연결이 되면 ConnectedUser 클래스가 생성됨
 	private class ConnectedUser extends Thread implements ProtocolImpl {
+		
 		// 소켓 장치
 		private Socket socket;
 
@@ -133,7 +130,6 @@ public class Server {
 		// 유저 정보
 		private String id; // 아이디
 		private String myRoomName; // 접속한 방번호
-
 		
 		public ConnectedUser(Socket socket) {
 			this.socket = socket;
@@ -378,12 +374,9 @@ public class Server {
 						broadCast("EmptyRoom/" + from);
 						break;
 					}
-					
-					
 				}
 			}
 		}
-		
 	} // end of MyRoom
 	
 

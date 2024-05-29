@@ -6,8 +6,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class ClientFrame extends JFrame{
 	
 	private JTabbedPane tabPane;
@@ -52,7 +57,7 @@ public class ClientFrame extends JFrame{
 		tabPane.setBounds(0, 0, getWidth(), getHeight());
 		mainPanel.add(tabPane);
 		
-		indexPanel.setLay out(null);
+		indexPanel.setLayout(null);
 		tabPane.addTab("로그인", null, indexPanel, null);
 		
 		tabPane.addTab("대기실", null, waitingRoomPanel, null);

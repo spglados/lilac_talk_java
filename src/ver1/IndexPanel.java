@@ -63,7 +63,7 @@ public class IndexPanel extends JPanel{
 	private void initObject() {
 		// 백그라운드 이미지 컴포넌트
 		backgroundImage = new ImageIcon("images/background_image.png").getImage();
-		backgroundImage = new JPanel();
+		backgroundPanel = new JPanel();
 		
 		// 보더 컴포넌트
 		borderPanel = new JPanel();
@@ -157,6 +157,8 @@ public class IndexPanel extends JPanel{
 		});
 	}
 	
+	// 각 입력칸이 null이 아닐때에 실행된다.
+	// 각 입력칸의 Text를 ( ip, port, id) 가지고 와서 메소드 호출
 	private void clickConnectButton() {
 		if((!inputIp.getText().equals(null)) && (!inputPort.getText().equals(null))
 				&& (!inputId.getText().equals(null))) {
