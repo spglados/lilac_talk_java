@@ -21,7 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
+@Setter 
 @ToString
 public class Server {
 
@@ -39,7 +39,7 @@ public class Server {
 	// 소켓 장치
 	private ServerSocket serverSocket;
 	private Socket socket;
-	
+
 	// 파일 저장을 위한 장치
 	private FileWriter fileWriter;
 
@@ -76,13 +76,13 @@ public class Server {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				
+
 				while (true) {
 					try {
 						// 소켓 장치
 						socket = serverSocket.accept();
 						serverViewAppendWriter("[알림] 사용자 접속 대기 \n");
-						
+
 						// 연결을 대기 하다가 유저가 들어오면 유저 생성, 소켓으로 유저 구분 가능
 						ConnectedUser user = new ConnectedUser(socket);
 						user.start();
@@ -103,23 +103,23 @@ public class Server {
 		}
 	}
 
-	// 
+	//
 	private void serverViewAppendWriter(String str) {
-			try {
-				fileWriter = new FileWriter("lilac_talk_log.txt", true);
-				mainBoard.append(str);
-				fileWriter.write(str);
-				fileWriter.flush();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			fileWriter = new FileWriter("lilac_talk_log.txt", true);
+			mainBoard.append(str);
+			fileWriter.write(str);
+			fileWriter.flush();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// 소켓 연결이 되면 ConnectedUser 클래스가 생성됨
 	private class ConnectedUser extends Thread implements ProtocolImpl {
-		
+
 		// 소켓 장치
 		private Socket socket;
 
@@ -130,7 +130,7 @@ public class Server {
 		// 유저 정보
 		private String id; // 아이디
 		private String myRoomName; // 접속한 방번호
-		
+
 		public ConnectedUser(Socket socket) {
 			this.socket = socket;
 			connectIO();
@@ -183,7 +183,7 @@ public class Server {
 				serverViewAppendWriter("[에러] 유저 " + id + "접속 끊김 !!\n");
 				for (int i = 0; i < madeRooms.size(); i++) {
 					MyRoom myRoom = madeRooms.elementAt(i);
-					if(myRoom.roomName.equals(this.myRoomName)) {
+					if (myRoom.roomName.equals(this.myRoomName)) {
 						myRoom.removeRoom(this);
 					}
 				}
@@ -191,15 +191,15 @@ public class Server {
 				broadCast("UserOut/" + id);
 			}
 		}
-		
+
 		// 프로토콜을 구별해서 해당 메소드 호출
 		private void checkProtocol(String str) {
 			StringTokenizer tokenizer = new StringTokenizer(str, "/");
-			
+
 			protocol = tokenizer.nextToken();
 			from = tokenizer.nextToken();
-			
-			if(protocol.equals("Chatting")) {
+
+			if (protocol.equals("Chatting")) {
 				message = tokenizer.nextToken();
 				chatting();
 			} else if (protocol.equals("SecretMessage")) {
@@ -213,7 +213,7 @@ public class Server {
 				enterRoom();
 			}
 		}
-		
+
 		// 클라이언트 측으로 보내는 응답
 		private void writer(String str) {
 			try {
@@ -223,39 +223,39 @@ public class Server {
 				JOptionPane.showMessageDialog(null, "서버 출력 에러 !", "알람", JOptionPane.ERROR_MESSAGE, icon);
 			}
 		}
-		
+
 		@Override
 		public void chatting() {
 			serverViewAppendWriter("[메세지]" + from + "-" + message + "\n");
-			
+
 			for (int i = 0; i < madeRooms.size(); i++) {
 				MyRoom myRoom = madeRooms.elementAt(i);
-				
-				if(myRoom.roomName.equals(from)) {
+
+				if (myRoom.roomName.equals(from)) {
 					myRoom.roomBroadCast("Chatting/" + id + "/" + message);
 				}
 			}
 		}
-		
+
 		@Override
 		public void secretMessage() {
 			serverViewAppendWriter("[비밀 메세지]" + id + "->" + from + "-" + message + "\n");
-		
+
 			for (int i = 0; i < connectedUsers.size(); i++) {
 				ConnectedUser user = connectedUsers.elementAt(i);
-				
+
 				if (user.id.equals(from)) {
 					user.writer("SecetMessage/" + id + "/" + message);
 				}
 			}
 		}
-		
+
 		@Override
 		public void makeRoom() {
-			for (int i = 0; i <madeRooms.size(); i++) {
+			for (int i = 0; i < madeRooms.size(); i++) {
 				MyRoom room = madeRooms.elementAt(i);
-				
-				if(room.roomName.equals(from)) {
+
+				if (room.roomName.equals(from)) {
 					writer("FailMakeRoom/" + from);
 					serverViewAppendWriter("[방 생성 실패]" + id + "-" + from + "\n");
 					roomCheck = false;
@@ -263,29 +263,29 @@ public class Server {
 					roomCheck = true;
 				}
 			}
-			
+
 			if (roomCheck) {
 				myRoomName = from;
 				MyRoom myRoom = new MyRoom(from, this);
 				madeRooms.add(myRoom);
 				serverViewAppendWriter("[방 생성]" + id + "-" + from + "\n");
-				
+
 				newRoom();
 				writer("MakeRoom/" + from);
 			}
 		}
-		
+
 		@Override
 		public void newRoom() {
 			broadCast("NewRoom/" + from);
 		}
-		
+
 		@Override
 		public void outRoom() {
 			for (int i = 0; i < madeRooms.size(); i++) {
 				MyRoom myRoom = madeRooms.elementAt(i);
-				
-				if(myRoom.roomName.equals(from)) {
+
+				if (myRoom.roomName.equals(from)) {
 					myRoomName = null;
 					myRoom.roomBroadCast("Chatting/퇴장/" + "님 퇴장");
 					serverViewAppendWriter("[방 퇴장]" + id + "-" + from + "\n");
@@ -294,12 +294,12 @@ public class Server {
 				}
 			}
 		}
-		
+
 		@Override
 		public void enterRoom() {
 			for (int i = 0; i < madeRooms.size(); i++) {
 				MyRoom myRoom = madeRooms.elementAt(i);
-				
+
 				if (myRoom.roomName.equals(from)) {
 					myRoomName = from;
 					myRoom.addUser(this);
@@ -309,14 +309,14 @@ public class Server {
 				}
 			}
 		}
-		
+
 		@Override
 		public void newUser() {
 			// 자기자신을 벡터에 추가
 			connectedUsers.add(this);
 			broadCast("NewUser/" + id);
 		}
-		
+
 		@Override
 		public void connectedUser() {
 			for (int i = 0; i < connectedUsers.size(); i++) {
@@ -324,7 +324,7 @@ public class Server {
 				writer("ConnectedUser/" + user.id);
 			}
 		}
-		
+
 		@Override
 		public void madeRoom() {
 			for (int i = 0; i < madeRooms.size(); i++) {
@@ -334,20 +334,20 @@ public class Server {
 		}
 
 	} // end of ConnectedUser
-	
+
 	// 방만들기를 했을때 생성되는 MyRoom 클래스
-	private class MyRoom{
-		
+	private class MyRoom {
+
 		private String roomName;
 		// myRoom에 들어온 사람들의 정보가 담김
 		private Vector<ConnectedUser> myRoom = new Vector<>();
-		
+
 		public MyRoom(String roomName, ConnectedUser connectedUser) {
 			this.roomName = roomName;
 			this.myRoom.add(connectedUser);
 			connectedUser.myRoomName = roomName;
 		}
-		
+
 		// 방에 있는 사람들에게 출력
 		private void roomBroadCast(String msg) {
 			for (int i = 0; i < myRoom.size(); i++) {
@@ -355,19 +355,19 @@ public class Server {
 				user.writer(msg);
 			}
 		}
-		
+
 		private void addUser(ConnectedUser connectedUser) {
 			myRoom.add(connectedUser);
 		}
-		
+
 		private void removeRoom(ConnectedUser user) {
 			myRoom.remove(user);
 			boolean empty = myRoom.isEmpty();
 			if (empty) {
 				for (int i = 0; i < madeRooms.size(); i++) {
 					MyRoom myRoom = madeRooms.elementAt(i);
-					
-					if(myRoom.roomName.equals(roomName)) {
+
+					if (myRoom.roomName.equals(roomName)) {
 						madeRooms.remove(this);
 						serverViewAppendWriter("[방 삭제]" + user.id + "_" + from + "\n");
 						roomBroadCast("OutRoom/" + from);
@@ -378,7 +378,6 @@ public class Server {
 			}
 		}
 	} // end of MyRoom
-	
 
 	public static void main(String[] args) {
 		new Server();

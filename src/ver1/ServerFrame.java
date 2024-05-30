@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import org.w3c.dom.css.RGBColor;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -83,6 +85,8 @@ public class ServerFrame extends JFrame {
 		// 백그라운드 패널
 		backgroundPanel.setSize(getWidth(), getHeight());
 		backgroundPanel.setLayout(null);
+		// 배경색 rgb
+		backgroundPanel.setBackground(new Color(232, 224, 255));
 		add(backgroundPanel);
 
 		// 포트패널 컴포넌트
@@ -122,7 +126,6 @@ public class ServerFrame extends JFrame {
 		private Image backgroundImage;
 
 		public BackgroundPanel() {
-			backgroundImage = new ImageIcon("images/background_image.png").getImage();
 			backgroundPanel = new JPanel();
 			add(backgroundPanel);
 		}

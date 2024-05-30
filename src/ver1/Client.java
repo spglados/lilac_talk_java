@@ -63,7 +63,7 @@ public class Client implements CallBackClientService, ProtocolImpl {
 	private Vector<String> roomNameList = new Vector<>();
 
 	// JOptionPane 사용할때 알림창의 아이콘 변경할 ImageIcon
-	private ImageIcon icon = new ImageIcon("images/lilac1.jpg");
+	private ImageIcon icon = new ImageIcon("images/error1_clear.jpg");
 
 	public Client() {
 		clientFrame = new ClientFrame(this);
@@ -222,7 +222,7 @@ public class Client implements CallBackClientService, ProtocolImpl {
 		} else if (from.equals("입장")) {
 			mainMessageBox.append("✿✿✿ " + from + " ✿✿✿" + message + "\n");
 		} else if (from.equals("퇴장")) {
-			mainMessageBox.append("✿✿ " + from + " ✿✿" + message + "\n");
+			mainMessageBox.append("XX " + from + " XX" + message + "\n");
 		} else {
 			mainMessageBox.append("✿ " + from + " ✿" + message + "\n");
 		} 

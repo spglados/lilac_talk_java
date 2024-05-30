@@ -68,10 +68,10 @@ public class WaitingRoomPanel extends JPanel implements ActionListener{
 		roomList = new JList<>();
 		
 		inputSecretMsg = new JTextField();
-		secretMsgButton = new JButton("send Message");
-		makeRoomButton = new JButton("makeRoom");
-		outRoomButton = new JButton("outRoom");
-		enterRoomButton = new JButton("enterRoom");
+		secretMsgButton = new JButton("메세지 보내기");
+		makeRoomButton = new JButton("방 만들기");
+		outRoomButton = new JButton("방 나가기");
+		enterRoomButton = new JButton("방 입장하기");
 	}
 	
 	private void initSetting() {
@@ -80,19 +80,19 @@ public class WaitingRoomPanel extends JPanel implements ActionListener{
 		
 		userListPanel.setBounds(50, 30, 120, 260);
 		userListPanel.setBackground(Color.WHITE);
-		userListPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 3), "user List"));
+		userListPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 3), "접속중인 유저"));
 		
 		userListPanel.add(userList);
 		add(userListPanel);
 		
 		roomListPanel.setBounds(230, 30, 120, 260);
 		roomListPanel.setBackground(Color.WHITE);
-		roomListPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 3), "room List"));
+		roomListPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 3), "방 목록"));
 		roomListPanel.add(roomList);
 		add(roomListPanel);
 		
-		roomButtonPanel.setBounds(50, 310, 300, 30);
-		roomButtonPanel.setBackground(Color.WHITE);
+		roomButtonPanel.setBounds(50, 310, 400, 30);
+		roomButtonPanel.setBackground(new Color(163, 132, 255));
 		roomButtonPanel.setLayout(null);
 		
 		makeRoomButton.setBackground(Color.WHITE);
@@ -100,7 +100,7 @@ public class WaitingRoomPanel extends JPanel implements ActionListener{
 		makeRoomButton.setEnabled(false);
 		
 		outRoomButton.setBackground(Color.WHITE);
-		outRoomButton.setBounds(108, 5, 85, 25);
+		outRoomButton.setBounds(105, 5, 90, 25);
 		outRoomButton.setEnabled(false);
 		
 		enterRoomButton.setBackground(Color.WHITE);
