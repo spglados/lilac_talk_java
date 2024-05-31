@@ -27,7 +27,7 @@ public class Client implements CallBackClientService, ProtocolImpl {
 
 	// 프레임 창
 	private ClientFrame clientFrame;
-
+	
 	// Client의 화면 부분의 컴포넌트를 멤버변수로 가져와 담을 변수
 	private JTextArea mainMessageBox;
 	private JList<String> userList;

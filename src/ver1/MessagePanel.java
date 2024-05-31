@@ -77,18 +77,18 @@ public class MessagePanel extends JPanel {
 		add(bottomPanel);
 
 		mainMessageBox.setEnabled(false);
-		mainPanel.setBounds(40, 20, 300, 350);
+		mainPanel.setBounds(50, 30, 380, 470);
 		mainPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 5), "Message"));
 		mainPanel.setBackground(Color.WHITE);
 		mainPanel.add(scrollPane);
-		scrollPane.setBounds(45, 15, 280, 310);
+		scrollPane.setBounds(55, 25, 360, 430);
 		scrollPane.add(mainMessageBox);
 		add(mainPanel);
 
 		sendMessageButton.setBackground(Color.WHITE);
-		sendMessageButton.setPreferredSize(new Dimension(60, 20));
+		sendMessageButton.setPreferredSize(new Dimension(90, 20));
 		sendMessageButton.setEnabled(false);
-		bottomPanel.setBounds(43, 380, 294, 35);
+		bottomPanel.setBounds(50, 520, 380, 35);
 		bottomPanel.setBackground(Color.WHITE);
 		bottomPanel.setBorder(new LineBorder(Color.BLACK, 2));
 		bottomPanel.add(writeMessageBox);

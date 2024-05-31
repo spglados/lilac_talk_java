@@ -1,6 +1,6 @@
 package ver1;
 
-import java.awt.Color;
+ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
@@ -21,39 +21,38 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
 @Setter
 @ToString
-public class IndexPanel extends JPanel{
-	
+public class IndexPanel extends JPanel {
+
 	// 백그라운드 이미지 컴포넌트
 	private Image backgroundImage;
 	private JPanel backgroundPanel;
-	
+
 	// 보더 컴포넌트
 	private JPanel borderPanel;
-	
+
 	// ip 컴포넌트
 	private JPanel ipPanel;
 	private JLabel ipLabel;
 	private JTextField inputIp;
-	
+
 	// port 컴포넌트
 	private JPanel portPanel;
 	private JLabel portLabel;
 	private JTextField inputPort;
-	
+
 	// id 컴포넌트
 	private JPanel idPanel;
 	private JLabel idLabel;
 	private JTextField inputId;
-	
+
 	// 로그인 버튼
 	private JButton connectButton;
-	
+
 	private CallBackClientService callBackClientService;
-	
+
 	public IndexPanel(CallBackClientService callBackService) {
 		this.callBackClientService = callBackService;
 		initObject();
@@ -81,7 +80,7 @@ public class IndexPanel extends JPanel{
 
 		// ID 컴포넌트
 		idPanel = new JPanel();
-		idLabel = new JLabel("ID");
+		idLabel = new JLabel("        ID        ");
 		inputId = new JTextField(10);
 
 		// 로그인 버튼
@@ -98,28 +97,28 @@ public class IndexPanel extends JPanel{
 		add(backgroundPanel);
 
 		// 보더 컴포넌트
-		borderPanel.setBounds(100, 60, 190, 380);
+		borderPanel.setBounds(125, 60, 220, 450);
 		borderPanel.setLayout(null);
 		borderPanel.setBackground(Color.WHITE);
 		borderPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 5), "Login"));
 		add(borderPanel);
 
 		// IP 컴포넌트
-		ipPanel.setBounds(30, 40, 120, 100);
+		ipPanel.setBounds(30, 50, 160, 100);
 		ipPanel.setBackground(new Color(0, 0, 0, 0));
 		ipPanel.add(ipLabel);
 		ipPanel.add(inputIp);
 		borderPanel.add(ipPanel);
 
 		// PORT 컴포넌트
-		portPanel.setBounds(30, 140, 120, 100);
+		portPanel.setBounds(30, 160, 160, 100);
 		portPanel.setBackground(new Color(0, 0, 0, 0));
 		portPanel.add(portLabel);
 		portPanel.add(inputPort);
 		borderPanel.add(portPanel);
 
 		// ID 컴포넌트
-		idPanel.setBounds(30, 240, 120, 100);
+		idPanel.setBounds(30, 270, 160, 100);
 		idPanel.setBackground(new Color(0, 0, 0, 0));
 		idPanel.add(idLabel);
 		idPanel.add(inputId);
@@ -127,7 +126,7 @@ public class IndexPanel extends JPanel{
 
 		// LoginBtn 컴포넌트
 		connectButton.setBackground(Color.WHITE);
-		connectButton.setBounds(30, 340, 120, 20);
+		connectButton.setBounds(30, 380, 160, 20);
 		borderPanel.add(connectButton);
 
 		// 테스트 코드
@@ -152,24 +151,24 @@ public class IndexPanel extends JPanel{
 			}
 		});
 	}
-	
+
 	// 각 입력칸이 null이 아닐때에 실행된다.
 	// 각 입력칸의 Text를 ( ip, port, id) 가지고 와서 메소드 호출
 	private void clickConnectButton() {
-		if((!inputIp.getText().equals(null)) && (!inputPort.getText().equals(null))
+		if ((!inputIp.getText().equals(null)) && (!inputPort.getText().equals(null))
 				&& (!inputId.getText().equals(null))) {
-			
+
 			String ip = inputIp.getText();
 			String stringPort = inputPort.getText();
 			int port = Integer.parseInt(stringPort);
 			String id = inputId.getText();
-			
+
 			callBackClientService.clickConnectServerButton(ip, port, id);
 		} else {
-			JOptionPane.showMessageDialog(null, "입력한 정보를 확인하세요", "알림", JOptionPane.INFORMATION_MESSAGE );
+			JOptionPane.showMessageDialog(null, "입력한 정보를 확인하세요", "알림", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
